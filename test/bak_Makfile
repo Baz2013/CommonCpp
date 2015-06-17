@@ -1,0 +1,19 @@
+GTEST_INC_DIR=/home/bazar/user/gucb/gtest_dir/include
+GTEST_LIB_DIR=/home/bazar/user/gucb/gtest_dir/lib
+
+S_INC_DIR = /home/bazar/user/gucb/GIT/CommonCpp/common/inc
+ 
+#gtest_demo: gtest_demo.o $(GTEST_LIB_DIR)/libgtest.a
+#	g++ -o gtest_demo -Wall -pthread -lpthread -lrt -fPIC -g gtest_demo.o -L"$(GTEST_LIB_DIR)" -lgtest
+			 
+#gtest_demo.o: gtest_demo.cpp
+#	g++ -c -D_GNU_SOURCE -fPIC -g gtest_demo.cpp -o gtest_demo.o -I$(GTEST_INC_DIR)
+
+gtest_demo: StringUtil_test.o $(GTEST_LIB_DIR)/libgtest.a
+	g++ -o gtest_demo -Wall -pthread -lpthread -lrt -fPIC -g gtest_demo.o -L"$(GTEST_LIB_DIR)" -lgtest
+
+StringUtil_test.o:StringUtil_test.cpp
+	g++ -c -D_GNU_SOURCE -fPIC -g gtest_demo.cpp -o gtest_demo.o -I$(GTEST_INC_DIR) -I$(S_INC_DIR)
+			 
+clean:
+	rm -rf *.o 

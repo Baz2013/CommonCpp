@@ -17,6 +17,16 @@ common_path="/ngbss/billing1/user/gucb/test1"  ###common 文件所在目录
 main_path=$(pwd);
 proj_name=${1}
 
+platform=$(uname)
+
+if [ ${platform} = "Linux" ];then
+	compiler="g++"
+	compile_param="-g -Wall -lrt -fPIC -Ddebug"
+elif [ ${platform} = "AIX" ];then
+	compiler="xlC"
+	compile_param="-g -brtl -q64 -O -lc -bnoquiet -Ddebug"
+fi
+
 ###############################function define#######################
 
 #判断common 文件是否存在
@@ -49,6 +59,7 @@ create_proj(){
 
 get_makefile(){
 	cd ${main_path}/${proj_name}
+	if [ ${platform} = "AIX" ];then 
 echo "###########################################
  #Makefile for the rbk programs
 ###########################################
@@ -65,13 +76,13 @@ INC_PATH = \$(MAIN_PATH)/inc
 
 #预编译环境
 ORAINC          = \${ORACLE_HOME}/rdbms/public
-ORALIBS         = -L \${ORACLE_HOME}/lib  -lclntsh -locci -lodbccli -lpthread -L \$(LIB_PATH) -lcommon
+ORALIBS         = -L\${ORACLE_HOME}/lib  -lclntsh -locci -lodbccli -lpthread -L \$(LIB_PATH) -lcommon
 ALTIBASE_INC    = \$(ALTIBASE_HOME)/include
 ALTIBASE_LIB    =-L \$(ALTIBASE_HOME)/lib
 
 #编译器环境
-CC        = xlC
-CFLAGS    = -g -brtl -q64 -O -lc -bnoquiet -Ddebug
+CC        = ${compiler}
+CFLAGS    = ${compile_param}
 CCINC     = -I\$(ORAINC) -I\$(INC_PATH) -I\$(ALTIBASE_INC) -I\$(COMM_INC)
 CCLIB     = \$(ORALIBS) \$(ALTIBASE_LIB)
 LINK.CC   = \$(CC) \$(CFLAGS) \$(CCINC) \$(CCLIB)
@@ -82,7 +93,7 @@ TARGET = \${BIN_PATH}/${proj_name} #\${BIN_PATH}/dataToFile #\${BIN_PATH}/fileIn
 all: \$(TARGET)
 
 clean:
-	-@rm -f \${OBJ_PATH}/*.o \${BIN_PATH}/billCdrCheck \${BIN_PATH}/dataToFile
+	-@rm -f \${OBJ_PATH}/*.o \${BIN_PATH}/${proj_name} ##\${BIN_PATH}/dataToFile
 
 \${BIN_PATH}/${proj_name}: \${OBJ_PATH}/main.o
 	\$(LINK.CC) -o \${BIN_PATH}/${proj_name} \${OBJ_PATH}/main.o \$(CCINC)
@@ -90,6 +101,46 @@ clean:
 \${OBJ_PATH}/main.o:\${SRC_PATH}/main.cpp
 	\$(COMP.CC) -o \${OBJ_PATH}/main.o -c \${SRC_PATH}/main.cpp  \${CCINC}
 " >>Makefile
+elif [ ${platform} = "Linux" ];then
+echo "###########################################
+ #Makefile for the rbk programs
+###########################################
+PROJ_PATH = ${main_path}
+MAIN_PATH = \$(PROJ_PATH)/${proj_name}
+
+LIB_PATH = \$(PROJ_PATH)/lib
+BIN_PATH = \$(PROJ_PATH)/bin
+COMM_INC = \$(PROJ_PATH)/common/inc
+
+SRC_PATH = \$(MAIN_PATH)/src
+OBJ_PATH = \$(MAIN_PATH)/obj
+INC_PATH = \$(MAIN_PATH)/inc
+
+#预编译环境
+LIBS			= -lpthread -L\$(LIB_PATH) -lcommon
+
+#编译器环境
+CC        = ${compiler}
+CFLAGS    = ${compile_param}
+CCINC     = -I\$(INC_PATH) -I\$(COMM_INC)
+CCLIB     = \$(LIBS)
+LINK.CC   = \$(CC) \$(CFLAGS) \$(CCINC) \$(CCLIB)
+COMP.CC   = \$(CC) \$(CFLAGS) \$(CCINC)
+
+
+TARGET = \${BIN_PATH}/${proj_name} 
+all: \$(TARGET)
+
+clean:
+	-@rm -f \${OBJ_PATH}/*.o \${BIN_PATH}/${proj_name}
+
+\${BIN_PATH}/${proj_name}: \${OBJ_PATH}/main.o
+	\$(CC) -o \${BIN_PATH}/${proj_name} \${OBJ_PATH}/main.o \$(CFLAGS) \$(CCINC) \$(CCLIB)
+
+\${OBJ_PATH}/main.o:\${SRC_PATH}/main.cpp
+	\$(COMP.CC) -o \${OBJ_PATH}/main.o -c \${SRC_PATH}/main.cpp  \${CCINC}
+" >>Makefile
+fi
 }
 
 get_main(){

@@ -21,9 +21,11 @@ clean:
 TARGET = ${LIB_PATH}/libcommon.a 
 all: $(TARGET)
 
-${LIB_PATH}/libcommon.a: ${OBJ_PATH}/StringUtil.o
-	ar r ${LIB_PATH}/libcommon.a ${OBJ_PATH}/StringUtil.o
+${LIB_PATH}/libcommon.a: ${OBJ_PATH}/StringUtil.o ${OBJ_PATH}/Log.o
+	ar r ${LIB_PATH}/libcommon.a ${OBJ_PATH}/StringUtil.o ${OBJ_PATH}/Log.o
 
 ${OBJ_PATH}/StringUtil.o:${SRC_PATH}/StringUtil.cpp
 	$(COMP.CC) -o ${OBJ_PATH}/StringUtil.o -c ${SRC_PATH}/StringUtil.cpp -I ${INC_PATH}
 
+${OBJ_PATH}/Log.o:${SRC_PATH}/Log.cpp
+	$(COMP.CC) -o ${OBJ_PATH}/Log.o -c ${SRC_PATH}/Log.cpp -I ${INC_PATH}

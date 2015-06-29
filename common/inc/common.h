@@ -5,10 +5,12 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <cctype>
 
 //STL header
 #include <vector>
 #include <map>
+#include <list>
 
 
 #include <stdio.h> 
@@ -21,7 +23,8 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <dirent.h>
-#include<stdarg.h>
+#include <stdarg.h>
 #include <string.h>
+#include <sys/time.h>
 
 #endif

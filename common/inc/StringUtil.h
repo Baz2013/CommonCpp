@@ -65,10 +65,14 @@ class StringUtil {
         static int trim(char *str);
         static char * trim(const char *str);
 
+		static bool isdigitStr(const string &num); //判断一个字符串中的字符是否全部是数字
+		static bool isdigitStr(const char *num);
+
         static string number2str(int number);
         static string number2str(float number);
         static string number2str(double number);
         static string charToString(const char *ch);
+
 };
 
 #endif

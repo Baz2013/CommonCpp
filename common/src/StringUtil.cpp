@@ -1,13 +1,13 @@
 #include"StringUtil.h"
 
 /*
-*功能 :得到一个命令执行的输出行
-*参数 :
-*返回值 :执行结果的
-*/
+ *功能 :得到一个命令执行的输出行
+ *参数 :
+ *返回值 :执行结果的
+ */
 int StringUtil::command(const string &cmd,
-				vector<string> &lines
-				){
+		vector<string> &lines
+		){
 	FILE *pipe;
 	char buffer[2048];
 
@@ -27,15 +27,15 @@ int StringUtil::command(const string &cmd,
 }
 
 /*
-*功能 :填充字符串
-*参数 :
-*返回值 :string类型,处理后的字符串
-*/
+ *功能 :填充字符串
+ *参数 :
+ *返回值 :string类型,处理后的字符串
+ */
 string StringUtil::pad(const char *str,         //源字符串
-		   const int length,        //预期长度
-		   const char *stuff, //要填充的字符
-		   const bool left   //是否在左边填充(反之在右边)
-					) {
+		const int length,        //预期长度
+		const char *stuff, //要填充的字符
+		const bool left   //是否在左边填充(反之在右边)
+		) {
 	size_t len = strlen(str);
 	if( len >= length ){
 		return str;
@@ -56,13 +56,13 @@ string StringUtil::pad(const char *str,         //源字符串
 }
 
 /*
-*功能 : 替换字符串
-*参数 : 源字符串,查找字符串,替换字符串
-*返回值 :bool类型,是否进行了替换
-*/
+ *功能 : 替换字符串
+ *参数 : 源字符串,查找字符串,替换字符串
+ *返回值 :bool类型,是否进行了替换
+ */
 bool StringUtil::replace(string &in,
-						const string &search,
-						const string &replacement
+		const string &search,
+		const string &replacement
 		){
 	bool bRet = false;
 	string::size_type pos = 0;
@@ -76,13 +76,13 @@ bool StringUtil::replace(string &in,
 }
 
 /*
-*功能 : 替换字符串
-*参数 : 源字符串,查找字符串,替换字符串
-*返回值 :string 类型,处理后的字符串
-*/
+ *功能 : 替换字符串
+ *参数 : 源字符串,查找字符串,替换字符串
+ *返回值 :string 类型,处理后的字符串
+ */
 string StringUtil::replace(const string &in,
-						   const string &search,
-						   const string &replacement
+		const string &search,
+		const string &replacement
 		){
 	string i = in;
 	replace(i,search,replacement);
@@ -96,9 +96,9 @@ string StringUtil::replace(const string &in,
  * 返回值 : size_t 类型
  */
 size_t StringUtil::split(const string &str,
-						 const string &delim,
-						 vector<string> &result,
-						 bool needTrim
+		const string &delim,
+		vector<string> &result,
+		bool needTrim
 		){
 	if(str.length() == 0)
 		return 0;
@@ -131,7 +131,7 @@ string & StringUtil::ltrim(string &str){
 	for(; pos != str.end() && (*pos == ' ' || *pos == '\t'); pos++)
 		;
 	if(pos != str.begin())
-			str.erase(str.begin(),pos);
+		str.erase(str.begin(),pos);
 
 	return str;
 }
@@ -140,7 +140,7 @@ string & StringUtil::rtrim(string &str){
 	string::reverse_iterator pos = str.rbegin();
 	for(;pos != str.rend() && (*pos == ' ' || *pos == '\t');pos++)
 		;
-    if(pos != str.rbegin()){
+	if(pos != str.rbegin()){
 		str.erase(pos.base(),str.end());
 	}
 
@@ -153,10 +153,10 @@ string & StringUtil::trim(string &str){
 }
 
 /*
-*功能 : 删除特定字符
-*参数 : 待处理字符串 , 去除的字符
-*返回值 : 返回字符串长度
-*/
+ *功能 : 删除特定字符
+ *参数 : 待处理字符串 , 去除的字符
+ *返回值 : 返回字符串长度
+ */
 int StringUtil::eraseChar(char *str,const char &ch){
 
 	int i,j,length;
@@ -174,10 +174,10 @@ int StringUtil::eraseChar(char *str,const char &ch){
 }
 
 /*
-*功能 : 删除字符串中指定的字符
-*参数 : 待处理字符串 , 去除的字符
-*返回值 : 返回字符串长度
-*/
+ *功能 : 删除字符串中指定的字符
+ *参数 : 待处理字符串 , 去除的字符
+ *返回值 : 返回字符串长度
+ */
 int StringUtil::eraseChar(string &str,const char &ch){
 	int len = str.length();
 	char *tmp = new char[len+1];
@@ -185,7 +185,7 @@ int StringUtil::eraseChar(string &str,const char &ch){
 	tmp[len+1] = '\0';
 	eraseChar(tmp,ch);
 	//cout<<tmp<<endl;
-    str = tmp;
+	str = tmp;
 
 	delete[] tmp;
 
@@ -211,10 +211,10 @@ string & StringUtil::toLowerCase(string &str){
 }
 
 /*
-*功能 : (忽略大小写)比较字符串
-*参数 : 需要比较的两个字符串
-*返回值 :boo值 (是否相等)
-*/
+ *功能 : (忽略大小写)比较字符串
+ *参数 : 需要比较的两个字符串
+ *返回值 :boo值 (是否相等)
+ */
 bool StringUtil::equalsIgnoreCase(const string str1,const string str2){
 
 	if(str1.length() != str2.length())
@@ -242,8 +242,8 @@ string StringUtil::repeat(const int count,const string &chr){
  *返回值 : 字符串长度
  */
 int StringUtil::lalign(char *str,
-						const int strlength,
-						const char stuff){
+		const int strlength,
+		const char stuff){
 	int i,length;
 	//ltrim(str);
 
@@ -253,7 +253,7 @@ int StringUtil::lalign(char *str,
 	if(length < strlength){
 		for(i = 1;i < strlength - length ;i++)
 			str[i+length-1] = stuff;
-	str[i+length-1] = '\0';
+		str[i+length-1] = '\0';
 	}
 	else
 		str[strlength] = '\0';
@@ -326,3 +326,31 @@ string StringUtil::number2str(float number){
 	ss<<number;
 	return ss.str();
 }
+
+/**
+* 判断一个字符串是否全部是数字
+*/
+bool StringUtil::isdigitStr(const string &num){
+	size_t len = num.length();
+	for(int i = 0;i < len;i++){
+		if(!isdigit(num[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+* 判断一个字符串是否全部是数字
+*/
+bool StringUtil::isdigitStr(const char *num){
+	size_t len = strlen(num);
+	for(int i = 0;i < len;i++){
+		if(!isdigit(num[i])){
+			return false;
+		}
+	}
+
+	return true;
+}
+

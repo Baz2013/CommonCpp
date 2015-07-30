@@ -331,6 +331,8 @@ string StringUtil::number2str(float number){
 * 判断一个字符串是否全部是数字
 */
 bool StringUtil::isdigitStr(const string &num){
+	if(num.length() == 0)
+		return false;
 	size_t len = num.length();
 	for(int i = 0;i < len;i++){
 		if(!isdigit(num[i])){
@@ -344,6 +346,8 @@ bool StringUtil::isdigitStr(const string &num){
 * 判断一个字符串是否全部是数字
 */
 bool StringUtil::isdigitStr(const char *num){
+	if(NULL == num)
+		return false;
 	size_t len = strlen(num);
 	for(int i = 0;i < len;i++){
 		if(!isdigit(num[i])){
